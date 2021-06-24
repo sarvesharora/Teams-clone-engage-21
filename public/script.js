@@ -1,0 +1,250 @@
+const socket = io('/');
+const myPeer = new Peer();
+let mystream;
+let mypeerid;
+const peers = {};
+let currentPeer = [];
+const myname = prompt('naam daal be');
+// const name = "";
+myPeer.on('open', id => {
+    console.log(id);
+    mypeerid = id;
+    socket.emit('join-room', ROOM_ID, id, myname);
+})
+
+//when some one ask to connect
+socket.on('user-connected', (peerid, name) => {
+    peers[peerid] = name;
+    console.log(`user connected with id ${peerid}`);
+    console.log("calling other man");
+    //callin the peer
+    let call = myPeer.call(peerid, mystream);
+    const vi = document.createElement('video');
+    vi.setAttribute('id', `${peerid}`);
+    currentPeer.push(call.peerConnection);
+    //accept the stream
+    let i = 0;
+    call.on('stream', comingstream => {
+        if (i == 1) {
+            addvideo(vi, comingstream);
+        }
+        i++;
+    })
+    socket.emit('givename', mypeerid, myname);
+})
+
+//user disconnected
+socket.on('user-diconnected', (peerid) => {
+    console.log(`ye wala londa nikal liya ${peerid}`);
+    const vid = document.getElementById(`${peerid}`);
+    vid.parentElement.remove();
+    delete peers[`${peerid}`];
+})
+
+navigator.mediaDevices.getUserMedia(
+    {
+        video: true,
+        audio: true
+    }
+).then(stream => {
+    mystream = stream;
+    addvideo(document.createElement('video'), mystream);
+})
+myPeer.on('call', (call) => {
+    // console.log(call.peer);
+    call.answer(mystream);
+    const vi = document.createElement('video');
+    vi.setAttribute('id', `${call.peer}`);
+    currentPeer.push(call.peerConnection);
+    // peers[call.peer] = "some name";
+    let i = 0;
+    call.on('stream', comingvideo => {
+        if (i == 1) {
+            addvideo(vi, comingvideo);
+        }
+        i++;
+    })
+})
+
+socket.on('recievename', (id, name) => {
+    peers[id] = name;
+})
+
+//add the video to html
+function addvideo(video, stream) {
+    console.log('hi');
+    const updiv = document.createElement('div');
+    updiv.setAttribute('class', 'video-container');
+    video.srcObject = stream;
+    video.autoplay = true;
+    updiv.appendChild(video);
+    document.querySelector('#video-grid').append(updiv);
+    const nameofuser = peers[video.id];
+    if (nameofuser) {
+        const indiv = document.createElement('div');
+        indiv.setAttribute('class', 'name-container');
+        indiv.textContent = nameofuser;
+        updiv.appendChild(indiv);
+    }
+}
+
+socket.on('recivehand', (peerid) => {
+    const vid = document.getElementById(`${peerid}`);
+    vid.style.border = '3px solid #F6BE00';
+    const div = document.createElement('div');
+    div.setAttribute('class', 'handnotification');
+    div.textContent = `${peers[peerid]} raised his hand`;
+    document.body.appendChild(div);
+    div.style.display = "block";
+    setTimeout(() => {
+        div.style.display = "none";
+    }, 2000);
+})
+socket.on('recievedownhand', (peerid) => {
+    const vid = document.getElementById(`${peerid}`);
+    vid.style.border = "";
+})
+
+//accepting socket messages
+socket.on('createMessage', (data, name) => {
+    const divcre = document.createElement('div');
+    const msg = document.createElement('div');
+    divcre.appendChild(msg);
+    const parent = document.body.querySelector('.show_message');
+    divcre.setAttribute('class', 'message-line');
+    divcre.setAttribute('class', 'comingmessage');
+    msg.setAttribute('class', 'blue-blac');
+    msg.textContent = data;
+    parent.append(divcre);
+    console.log(name);
+})
+//send the messages to server
+const send = () => {
+    const inbox = document.querySelector('#message-box');
+    const message = inbox.value;
+    const divcre = document.createElement('div');
+    const msg = document.createElement('div');
+    msg.setAttribute('class', 'green');
+    divcre.appendChild(msg);
+    divcre.setAttribute('class', 'message-line');
+    divcre.setAttribute('class', 'isent');
+    msg.textContent = message;
+    const parent = document.body.querySelector('.show_message');
+    parent.append(divcre);
+    inbox.value = "";
+    socket.emit('message', message, myname);
+}
+
+//buttons
+
+//mute and unmute audio
+const muteUnmute = () => {
+    const enabled = mystream.getAudioTracks()[0].enabled;
+    const bt = document.getElementById('muteunmute');
+    if (enabled) {
+        const html = `<i class="fas fa-microphone-alt-slash"></i>`;
+        mystream.getAudioTracks()[0].enabled = false;
+        bt.innerHTML = html;
+    } else {
+        const html = `<i class="fas fa-microphone"></i>`;
+        mystream.getAudioTracks()[0].enabled = true;
+        bt.innerHTML = html;
+    }
+}
+//video stop send
+const playStop = () => {
+    let enabled = mystream.getVideoTracks()[0].enabled;
+    const bt = document.getElementById('playstop');
+    if (enabled) {
+        const html = `<i class="fas fa-video-slash"></i>`;
+        mystream.getVideoTracks()[0].enabled = false;
+        bt.innerHTML = html;
+    } else {
+        const html = `<i class="fas fa-video"></i>`;
+        mystream.getVideoTracks()[0].enabled = true;
+        bt.innerHTML = html;
+    }
+}
+//copy url
+const copy = () => {
+    const url = window.location.href;
+    navigator.clipboard.writeText(url);
+}
+//diconnect
+const disconnect = () => {
+    window.location = '/exit';
+    myPeer.destroy();
+}
+//tell participants
+const participants = () => {
+    for (const i in peers) {
+        console.log(i, peers[i]);
+    }
+}
+const dis = () => {
+    const vid = document.querySelectorAll('video');
+    console.log(vid);
+}
+//zoom video
+document.addEventListener('click', e => {
+    const ele = e.target;
+    str = ele.localName;
+    if (str == 'video') {
+        ele.classList.toggle('big-small');
+    }
+})
+
+//stop screen share
+const stopScreenShare = () => {
+    let myVideoStream = mystream;
+    let videoTrack = myVideoStream.getVideoTracks()[0];
+    for (let x = 0; x < currentPeer.length; x++) {
+        let sender = currentPeer[x].getSenders().find(function (s) {
+            return s.track.kind == videoTrack.kind;
+        })
+        sender.replaceTrack(videoTrack);
+    }
+}
+//screen share
+const screenshare = () => {
+    navigator.mediaDevices.getDisplayMedia({
+        video: {
+            cursor: 'always'
+        },
+        audio: {
+            echoCancellation: true,
+            noiseSupprission: true
+        }
+
+    }).then(stream => {
+        let videoTrack = stream.getVideoTracks()[0];
+        videoTrack.onended = function () {
+            stopScreenShare();
+        }
+        for (let x = 0; x < currentPeer.length; x++) {
+            //i added this
+            // console.log(currentPeer[x].getSenders());
+            let sender = currentPeer[x].getSenders().find(function (s) {
+                return s.track.kind == videoTrack.kind;
+            })
+
+            sender.replaceTrack(videoTrack);
+        }
+
+    })
+}
+let hand_raised = false;
+const raisehand = () => {
+    const bt = document.getElementById('raisehand');
+    if (!hand_raised) {
+        socket.emit('raise_hand', mypeerid);
+        hand_raised = true;
+        bt.style.color = "yellow";
+    }
+    else {
+        socket.emit('down_hand', mypeerid);
+        hand_raised = false;
+        bt.style.color = "";
+
+    }
+}
