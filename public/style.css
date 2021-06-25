@@ -206,3 +206,12 @@ button {
   border-radius: 10px;
   margin-bottom: 5px;
 }
+
+#suggestion {
+  position: absolute;
+  width: 100px;
+  right: 400px;
+  bottom: 50px;
+  color: black;
+  background-color: yellow;
+}

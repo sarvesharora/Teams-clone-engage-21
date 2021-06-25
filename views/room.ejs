@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://kit.fontawesome.com/c939d0e917.js"></script>
     <script src="script.js" defer></script>
+    <script src="script2.js" defer></script>
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -35,17 +36,19 @@
         <button title="stop/start video" id="playstop" onclick="playStop()"><i class="fas fa-video"></i></button>
         <button title="copy link" id="copy" onclick="copy()"><i class="far fa-copy"></i></button>
         <button title="disconnect" id="disconnect" onclick="disconnect()"><i class="fas fa-phone-slash"></i></button>
-        <button title="particiants" id="particiants" onclick="participants()"><i class="fas fa-user-friends"></i></button>
+        <button title="particiants" id="particiants" onclick="participants()"><i
+                class="fas fa-user-friends"></i></button>
         <button title="screenshare" id="screenshare" onclick="screenshare()"><i class="fas fa-desktop"></i></button>
         <button title="raisehand" id="raisehand" onclick="raisehand()"><i class="fas fa-hand-paper"></i></button>
+        <button title="speak for command" id="X">speak to AI</button>
     </div>
-    
+
     <div class="messaging">
         <div class="show_message">
         </div>
         <div class="msgcreator">
-        <input type="text" id="message-box">
-        <button id="send" onclick="send()"><i class="fas fa-paper-plane"></i></button>
+            <input type="text" id="message-box">
+            <button id="send" onclick="send()"><i class="fas fa-paper-plane"></i></button>
         </div>
     </div>
 </body>
