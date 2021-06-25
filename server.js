@@ -37,8 +37,8 @@ io.on('connection', socket => {
         socket.on('raise_hand', (peerid) => {
             socket.to(roomid).emit('recivehand', peerid);
         })
-        socket.on('down_hand',(peerid)=>{
-            socket.to(roomid).emit('recievedownhand',peerid);
+        socket.on('down_hand', (peerid) => {
+            socket.to(roomid).emit('recievedownhand', peerid);
         })
         socket.on('disconnect', () => {
             socket.to(roomid).emit('user-diconnected', peerid);

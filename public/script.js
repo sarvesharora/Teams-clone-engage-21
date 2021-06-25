@@ -109,6 +109,10 @@ socket.on('recievedownhand', (peerid) => {
 socket.on('createMessage', (data, name) => {
     const divcre = document.createElement('div');
     const msg = document.createElement('div');
+    const nam = document.createElement('div');
+    nam.setAttribute('class', 'sendername');
+    nam.textContent = name;
+    divcre.appendChild(nam);
     divcre.appendChild(msg);
     const parent = document.body.querySelector('.show_message');
     divcre.setAttribute('class', 'message-line');
@@ -145,7 +149,9 @@ const muteUnmute = () => {
         const html = `<i class="fas fa-microphone-alt-slash"></i>`;
         mystream.getAudioTracks()[0].enabled = false;
         bt.innerHTML = html;
+        bt.style.color = "red";
     } else {
+        bt.style.color = "white";
         const html = `<i class="fas fa-microphone"></i>`;
         mystream.getAudioTracks()[0].enabled = true;
         bt.innerHTML = html;
@@ -159,7 +165,9 @@ const playStop = () => {
         const html = `<i class="fas fa-video-slash"></i>`;
         mystream.getVideoTracks()[0].enabled = false;
         bt.innerHTML = html;
+        bt.style.color = "red";
     } else {
+        bt.style.color = "white";
         const html = `<i class="fas fa-video"></i>`;
         mystream.getVideoTracks()[0].enabled = true;
         bt.innerHTML = html;
@@ -167,8 +175,17 @@ const playStop = () => {
 }
 //copy url
 const copy = () => {
+    const div = document.createElement('div');
+    div.setAttribute('class', 'handnotification');
     const url = window.location.href;
     navigator.clipboard.writeText(url);
+    div.textContent = "copied link";
+    document.body.appendChild(div);
+    div.style.display = "block";
+    setTimeout(() => {
+        div.style.display = "none";
+    }, 2000);
+
 }
 //diconnect
 const disconnect = () => {
@@ -176,9 +193,38 @@ const disconnect = () => {
     myPeer.destroy();
 }
 //tell participants
+let openparticipants = false;
 const participants = () => {
-    for (const i in peers) {
-        console.log(i, peers[i]);
+    if (!openparticipants) {
+        const main = document.createElement('div');
+        const button = document.createElement('button');
+        const heading = document.createElement('div');
+        heading.textContent = "Participants";
+        button.textContent = 'X';
+        button.setAttribute('id', 'close-participants');
+        main.appendChild(heading);
+        main.appendChild(button);
+        main.setAttribute('class', 'participants');
+        const names = document.createElement('div');
+        names.setAttribute('class', 'participant_name');
+        names.textContent = myname;
+        main.appendChild(names);
+        for (let i in peers) {
+            const names = document.createElement('div');
+            names.setAttribute('class', 'participant_name');
+            names.textContent = peers[i];
+            main.appendChild(names);
+        }
+        openparticipants = true;
+        document.body.appendChild(main);
+        document.querySelector('#close-participants').addEventListener('click', () => {
+            document.querySelector('.participants').remove();
+            openparticipants = false;
+        })
+    }
+    else {
+        document.querySelector('.participants').remove();
+        openparticipants = false;
     }
 }
 const dis = () => {

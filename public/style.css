@@ -124,9 +124,18 @@ button {
   height: 40px;
   width: 45px;
 }
-
 #disconnect {
   background-color: red;
+}
+
+#disconnect :hover,
+#muteunmute :hover,
+#playstop :hover,
+#raisehand :hover,
+#copy :hover,
+#particiants :hover,
+#screenshare :hover {
+  opacity: 0.5;
 }
 
 .messaging {
@@ -152,6 +161,14 @@ button {
   margin-right: -8px;
   color: white;
 }
+.sendername {
+  /* border: 1px solid white; */
+  font-size: 8px;
+  width: fit-content;
+  height: 10px;
+  position: relative;
+  bottom: -40px;
+}
 .handnotification {
   display: none;
   color: black;
@@ -162,4 +179,30 @@ button {
   left: 40vw;
   padding: 5px;
   border-radius: 4px;
+}
+.participants {
+  position: absolute;
+  height: 100vh;
+  top: 0px;
+  width: 326px;
+  color: white;
+  z-index: 8000000000;
+  right: 0px;
+  text-align: center;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  background-color: rgb(17, 34, 58);
+  transition: all 1s ease-in-out;
+}
+#close-participants {
+  color: red;
+  position: relative;
+  right: -150px;
+  top: -28px;
+}
+.participant_name {
+  border: 1px solid;
+  padding: 5px;
+  border-radius: 10px;
+  margin-bottom: 5px;
 }
