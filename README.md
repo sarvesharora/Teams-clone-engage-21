@@ -31,10 +31,10 @@ has several features
  
  1) clone this repositry
 
- 2)npm i express
+ 2) npm i express
 
  3) node server.js (while in the folder)
 
  4) go to web browser to http://localhost:3000
 
- 5)enter your name and share link
+ 5) enter your name and share link
