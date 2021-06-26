@@ -25,3 +25,16 @@ has several features
 6.raise hand
 
 7.speak command to execute above commands
+
+
+## to use in your pc
+ 
+ 1) clone this repositry
+
+ 2)npm i express
+
+ 3) node server.js (while in the folder)
+
+ 4) go to web browser to http://localhost:3000
+
+ 5)enter your name and share link
