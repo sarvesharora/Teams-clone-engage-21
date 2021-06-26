@@ -11,10 +11,17 @@ socket.io is used for communicating to server
 peerjs is used to send stream to all the peer in the specific link
 
 has several features
+
 1.mute /unmute
+
 2.stop /start video
+
 3.screen share
+
 4.disconnect
+
 5.chat
+
 6.raise hand
+
 7.speak command to execute above commands
