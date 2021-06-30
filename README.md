@@ -11,29 +11,29 @@ socket.io is used for communicating to server
 peerjs is used to send stream to all the peer in the specific link
 
 ## features
-   1) mute /unmute
 
-   2) stop /start video
+1.  mute /unmute
 
-   3) screen share
+2.  stop /start video
 
-   4) disconnect
+3.  screen share
 
-   5) chat
+4.  disconnect
 
-   6) raise hand
+5.  chat
 
-   7) speak command to execute above commands
+6.  raise hand
 
+7.  speak command to execute above commands
 
 ## to use in your pc
- 
- 1) clone this repositry
 
- 2) npm i express
+1.  clone this repositry
 
- 3) node server.js (while in the folder)
+2.  npm i express
 
- 4) go to web browser to http://localhost:3000
+3.  node server.js (while in the folder)
 
- 5) enter your name and share link
+4.  go to web browser to http://localhost:3000
+
+5.  enter your name and share link
