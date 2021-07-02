@@ -39,11 +39,11 @@ video {
   width: 343px;
 }
 .big-small {
-  top: 0px;
-  left: -150px;
-  height: 90vh;
-  width: 100vw;
-  object-fit: cover;
+  top: -162px;
+  left: -50px;
+  height: 115vh;
+  width: 1179px;
+  object-fit: contain;
   position: absolute;
   z-index: 1000;
 }
@@ -215,7 +215,7 @@ button {
   color: black;
   background-color: yellow;
 }
-#bluredvideo{
+#bluredvideo {
   position: absolute;
   top: 0px;
   left: 5px;

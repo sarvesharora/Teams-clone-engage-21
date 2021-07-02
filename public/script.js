@@ -1,11 +1,13 @@
+//ocket peer peers objects and names initialized 
 const socket = io('/');
 const myPeer = new Peer();
 let mystream;
 let mypeerid;
 const peers = {};
 let currentPeer = [];
-const myname = prompt('naam daal be');
-// const name = "";
+const myname = prompt('enter your name');
+
+//peer object open for connection
 myPeer.on('open', id => {
     console.log(id);
     mypeerid = id;
@@ -30,17 +32,19 @@ socket.on('user-connected', (peerid, name) => {
         }
         i++;
     })
+    //give name to the person that called
     socket.emit('givename', mypeerid, myname);
 })
 
 //user disconnected
 socket.on('user-diconnected', (peerid) => {
-    console.log(`ye wala londa nikal liya ${peerid}`);
+    console.log(`user ${peerid} disconnected`);
     const vid = document.getElementById(`${peerid}`);
     vid.parentElement.remove();
     delete peers[`${peerid}`];
 })
 
+//getting your video
 navigator.mediaDevices.getUserMedia(
     {
         video: true,
@@ -50,14 +54,18 @@ navigator.mediaDevices.getUserMedia(
     mystream = stream;
     addvideo(document.createElement('video'), mystream);
 })
+
+
+//when some one calls through peerjs
 myPeer.on('call', (call) => {
-    // console.log(call.peer);
+    //answer by giving stream
     call.answer(mystream);
     const vi = document.createElement('video');
     vi.setAttribute('id', `${call.peer}`);
     currentPeer.push(call.peerConnection);
     // peers[call.peer] = "some name";
     let i = 0;
+    //add video
     call.on('stream', comingvideo => {
         if (i == 1) {
             addvideo(vi, comingvideo);
@@ -66,13 +74,8 @@ myPeer.on('call', (call) => {
     })
 })
 
-socket.on('recievename', (id, name) => {
-    peers[id] = name;
-})
-
 //add the video to html
 function addvideo(video, stream) {
-    console.log('hi');
     const updiv = document.createElement('div');
     updiv.setAttribute('class', 'video-container');
     video.srcObject = stream;
@@ -88,6 +91,14 @@ function addvideo(video, stream) {
     }
 }
 
+//events
+//recieve name
+socket.on('recievename', (id, name) => {
+    peers[id] = name;
+})
+
+
+//hand recieve
 socket.on('recivehand', (peerid) => {
     const vid = document.getElementById(`${peerid}`);
     vid.style.border = '3px solid #F6BE00';
@@ -100,6 +111,7 @@ socket.on('recivehand', (peerid) => {
         div.style.display = "none";
     }, 2000);
 })
+//down-hand recieved
 socket.on('recievedownhand', (peerid) => {
     const vid = document.getElementById(`${peerid}`);
     vid.style.border = "";

@@ -1,3 +1,5 @@
+//bluring the background
+
 const canvas = document.createElement('canvas');
 canvas.setAttribute('hidden', 'true');
 let give = false;
@@ -16,8 +18,6 @@ const sendblur = () => {
         stopScreenShare();
     }
     for (let x = 0; x < currentPeer.length; x++) {
-        //i added this
-        // console.log(currentPeer[x].getSenders());
         let sender = currentPeer[x].getSenders().find(function (s) {
             return s.track.kind == videoTrack.kind;
         })

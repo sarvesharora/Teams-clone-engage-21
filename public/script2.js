@@ -1,3 +1,5 @@
+//the listening audio button
+
 var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition
 var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList
 var SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent
@@ -38,26 +40,29 @@ recognition.onresult = function (event) {
     setTimeout(() => {
         document.getElementById('suggestion').remove();
     }, 3000);
-    if (res == 'disconnect') {
+    if (res == 'disconnect' || res == 'leave') {
         disconnect();
     }
     else if (res == 'mute' || res == 'unmute') {
         muteUnmute();
     }
-    else if (res == 'raisehand' || res == 'hand') {
+    else if (res == 'raisehand' || res == 'hand' || res == 'handraise') {
         raisehand();
     }
-    else if (res == "screenshare") {
+    else if (res == "screenshare" || res == 'sharescreen') {
         screenshare();
     }
-    else if (res == 'copy') {
+    else if (res == 'copy' || res == 'copylink') {
         copy();
     }
-    else if (res == 'participants') {
+    else if (res == 'participants' || res == 'participant') {
         participants();
     }
     else if (res == 'video') {
         playStop();
+    }
+    else if (res == 'blur') {
+        bluri();
     }
 }
 recognition.onspeechend = function () {
