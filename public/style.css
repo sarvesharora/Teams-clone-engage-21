@@ -215,3 +215,8 @@ button {
   color: black;
   background-color: yellow;
 }
+#bluredvideo{
+  position: absolute;
+  top: 0px;
+  left: 5px;
+}

@@ -276,7 +276,6 @@ const screenshare = () => {
 
             sender.replaceTrack(videoTrack);
         }
-
     })
 }
 let hand_raised = false;
@@ -291,6 +290,5 @@ const raisehand = () => {
         socket.emit('down_hand', mypeerid);
         hand_raised = false;
         bt.style.color = "";
-
     }
 }
