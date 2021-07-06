@@ -3,17 +3,18 @@ const socket = io();
 socket.emit('join-chat-room', (chatroomid));
 const btn = document.querySelector("#send-button");
 const ms = document.querySelector("#message-input");
-// const name = prompt('Naam daal be');
+const name = prompt('Naam daal be');
 
 btn.addEventListener('click', function (e) {
     e.preventDefault();
     messag = ms.value;
     appendmine(messag);
-    socket.emit('chat-message', messag);
+    addtodb(messag);
+    socket.emit('chat-message', messag,name);
     ms.value = "";
 })
-socket.on('accept', (msg) => {
-    append(msg);
+socket.on('accept', (msg,name) => {
+    append(msg,name);
 }
 )
 function appendmine(message) {
@@ -27,8 +28,8 @@ function appendmine(message) {
     const parent = document.body.querySelector('.show_message');
     parent.append(divcre);
 }
-function append(message) {
-    const name = "amitabh bachpan";
+function append(message, name) {
+    // const name = "amitabh bachpan";
     const divcre = document.createElement('div');
     const msg = document.createElement('div');
     const nam = document.createElement('div');
@@ -50,3 +51,37 @@ const test = () => {
 const phatu = () => {
     window.location = '/exit';
 }
+
+
+
+//firebase
+
+db.collection('chats').get().then((snapshot) => {
+    snapshot.docs.forEach(doc => {
+        console.log(doc.data(), doc.id);
+    });
+})
+
+function addtodb(message) {
+    // const name="myself";
+
+    db.collection('chats').add({
+        name: name,
+        message: message,
+        roomid: chatroomid,
+        time: firebase.firestore.Timestamp.fromDate(new Date())
+    })
+}
+
+db.collection('chats').orderBy('time').get().then((ele) => {
+    ele.docs.forEach(doc => {
+        console.log(doc.data());
+        if (doc.data().roomid == chatroomid) {
+            if (doc.data().name === name) {
+                appendmine(doc.data().message);
+            } else {
+                append(doc.data().message, doc.data().name);
+            }
+        }
+    })
+})
