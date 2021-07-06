@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        const chatroomid = "<%= chatroomid %>";
+    </script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
+        integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="/socket.io/socket.io.js" defer></script>
+    <script src="/chatscript.js" defer></script>
+    <link rel="stylesheet" href="/chatstyle.css">
+</head>
+
+<body>
+    <h1>chat</h1>
+    <div id="message-container">
+        <div class="show_message">
+        </div>
+        <form id="sent-container">
+            <input type="text" id="message-input">
+            <button type="submit" id="send-button"><i class="fas fa-paper-plane"></i></button>
+        </form>
+    </div>
+    <div id="output">
+    </div>
+    <button onclick="test()">start video call</button>
+    <button onclick="phatu()">leave meeting</button>
+</body>
+
+</html>

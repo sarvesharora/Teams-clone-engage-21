@@ -3,19 +3,23 @@ const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
 const { v4: uuidV4 } = require('uuid');
+const path = require('path');
 
+const HTML_DIR = path.join(__dirname, '/public/')
+app.use(express.static(HTML_DIR));
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
 app.get('/exit', (req, res) => {
     res.render('exit');
 })
-
-
 app.get('/', (req, res) => {
-    res.redirect(`/${uuidV4()}`);
+    res.redirect(`/${uuidV4()}/chat`);
 })
-
+app.get('/:room/chat', (req, res) => {
+    // console.log(req.params.room);
+    res.render('chat', { chatroomid: req.params.room });
+})
 app.get('/:room', (req, res) => {
     ROOM_ID = req.params.room;
     res.render('room', { ROOM_ID: ROOM_ID });
@@ -24,6 +28,12 @@ app.get('/:room', (req, res) => {
 
 io.on('connection', socket => {
     console.log(socket.id);
+    socket.on('join-chat-room', (chatroomid) => {
+        socket.join(chatroomid);
+        socket.on('chat-message', (msg) => {
+            socket.to(chatroomid).emit('accept', msg);
+        })
+    })
     socket.on('join-room', (roomid, peerid, name) => {
         socket.join(roomid);
         socket.to(roomid).emit('user-connected', peerid, name);

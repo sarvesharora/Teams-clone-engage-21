@@ -1,4 +1,4 @@
-//ocket peer peers objects and names initialized 
+//socket peer peers objects and names initialized 
 const socket = io('/');
 const myPeer = new Peer();
 let mystream;
@@ -97,7 +97,6 @@ socket.on('recievename', (id, name) => {
     peers[id] = name;
 })
 
-
 //hand recieve
 socket.on('recivehand', (peerid) => {
     const vid = document.getElementById(`${peerid}`);
@@ -111,6 +110,7 @@ socket.on('recivehand', (peerid) => {
         div.style.display = "none";
     }, 2000);
 })
+
 //down-hand recieved
 socket.on('recievedownhand', (peerid) => {
     const vid = document.getElementById(`${peerid}`);
@@ -201,7 +201,7 @@ const copy = () => {
 }
 //diconnect
 const disconnect = () => {
-    window.location = '/exit';
+    window.location = window.location.href + '/chat';
     myPeer.destroy();
 }
 //tell participants
