@@ -3,12 +3,16 @@ const socket = io();
 socket.emit('join-chat-room', (chatroomid));
 const btn = document.querySelector("#send-button");
 const ms = document.querySelector("#message-input");
+<<<<<<< HEAD
 
 let name = sessionStorage.getItem('name');
 if(!name){
 name = prompt('pls enter your name (pls remember for future purpose also)');
 sessionStorage.setItem('name',name);
 }
+=======
+const name = prompt('Naam daal be');
+>>>>>>> parent of 0afc049... corrected voice
 
 btn.addEventListener('click', function (e) {
     e.preventDefault();
