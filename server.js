@@ -4,6 +4,8 @@ const server = require('http').Server(app);
 const io = require('socket.io')(server);
 const { v4: uuidV4 } = require('uuid');
 const path = require('path');
+const port = process.env.PORT
+
 
 const HTML_DIR = path.join(__dirname, '/public/')
 app.use(express.static(HTML_DIR));
@@ -56,6 +58,6 @@ io.on('connection', socket => {
     })
 })
 
-server.listen(3000, function () {
+server.listen(port||3000, function () {
     console.log('server is listening 3000');
 });
