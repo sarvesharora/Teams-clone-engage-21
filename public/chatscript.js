@@ -3,7 +3,7 @@ const socket = io();
 socket.emit('join-chat-room', (chatroomid));
 const btn = document.querySelector("#send-button");
 const ms = document.querySelector("#message-input");
-const name = prompt('Naam daal be');
+const name = prompt('pls enter your name (pls remember for future purpose also)');
 
 btn.addEventListener('click', function (e) {
     e.preventDefault();

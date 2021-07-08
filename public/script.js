@@ -52,7 +52,9 @@ navigator.mediaDevices.getUserMedia(
     }
 ).then(stream => {
     mystream = stream;
-    addvideo(document.createElement('video'), mystream);
+    const myvid = document.createElement('video');
+    myvid.muted = true;
+    addvideo(myvid, mystream);
 })
 
 
