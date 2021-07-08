@@ -5,8 +5,8 @@ let mystream;
 let mypeerid;
 const peers = {};
 let currentPeer = [];
-const myname = prompt('enter your name');
-
+// const myname = prompt('enter your name');
+myname = sessionStorage.getItem('name');
 //peer object open for connection
 myPeer.on('open', id => {
     console.log(id);
