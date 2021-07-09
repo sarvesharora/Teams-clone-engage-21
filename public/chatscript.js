@@ -1,21 +1,14 @@
+//socket io connection
 const socket = io();
-// socket.connect();
 socket.emit('join-chat-room', (chatroomid));
 const btn = document.querySelector("#send-button");
 const ms = document.querySelector("#message-input");
-// <<<<<<< HEAD
-
-// let name = sessionStorage.getItem('name');
-// if(!name){
-// name = prompt('pls enter your name (pls remember for future purpose also)');
-// sessionStorage.setItem('name',name);
-// }
-// =======
-let name="";
-if (!sessionStorage.getItem('name')){
-name = prompt('Naam daal be');
-sessionStorage.setItem('name', name);
-}else{
+let name = "";
+//name
+if (!sessionStorage.getItem('name')) {
+    name = prompt('Enter your name ');
+    sessionStorage.setItem('name', name);
+} else {
     name = sessionStorage.getItem('name');
 }
 
@@ -29,10 +22,12 @@ btn.addEventListener('click', function (e) {
     socket.emit('chat-message', messag, name);
     ms.value = "";
 })
+//msg accept
 socket.on('accept', (msg, name) => {
     append(msg, name);
 }
 )
+//append the my message 
 function appendmine(message) {
     const divcre = document.createElement('div');
     const msg = document.createElement('div');
@@ -44,6 +39,7 @@ function appendmine(message) {
     const parent = document.body.querySelector('.show_message');
     parent.append(divcre);
 }
+//append msg
 function append(message, name) {
     // const name = "amitabh bachpan";
     const divcre = document.createElement('div');
@@ -61,26 +57,25 @@ function append(message, name) {
     parent.append(divcre);
     // console.log(name);
 }
+//going to meeting
 const test = () => {
     window.location = window.location.href.slice(0, -5);
 }
-const phatu = () => {
+const leave = () => {
     window.location = '/exit';
 }
 
 
-
 //firebase
-
 db.collection('chats').get().then((snapshot) => {
     snapshot.docs.forEach(doc => {
         console.log(doc.data(), doc.id);
     });
 })
 
+//adding to database
 function addtodb(message) {
     // const name="myself";
-
     db.collection('chats').add({
         name: name,
         message: message,
@@ -88,7 +83,7 @@ function addtodb(message) {
         time: firebase.firestore.Timestamp.fromDate(new Date())
     })
 }
-
+//collectiing the msg for database
 db.collection('chats').orderBy('time').get().then((ele) => {
     ele.docs.forEach(doc => {
         console.log(doc.data());

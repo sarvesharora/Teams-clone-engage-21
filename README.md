@@ -28,6 +28,8 @@ peerjs is used to send stream to all the peer in the specific link
 
 8.  blur (blur the background)
 
+9. click a video to zoom
+
 ## to use in your pc
 
 1.  clone this repositry

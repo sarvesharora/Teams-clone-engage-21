@@ -30,6 +30,7 @@ const start_recognising = () => {
 
 document.getElementById('X').addEventListener('click', start_recognising);
 
+//the ifelse ladder to identify words
 recognition.onresult = function (event) {
     console.log('result arrived');
     const tell = document.getElementById('suggestion');

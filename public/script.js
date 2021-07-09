@@ -297,6 +297,7 @@ const screenshare = () => {
         }
     })
 }
+//hand raise
 let hand_raised = false;
 const raisehand = () => {
     const bt = document.getElementById('raisehand');
