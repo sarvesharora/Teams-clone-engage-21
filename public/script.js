@@ -6,7 +6,14 @@ let mypeerid;
 const peers = {};
 let currentPeer = [];
 // const myname = prompt('enter your name');
-myname = sessionStorage.getItem('name');
+let myname = "";
+if (!sessionStorage.getItem('name')) {
+    myname = prompt('Naam daal be');
+    sessionStorage.setItem('name', myname);
+} else {
+    myname = sessionStorage.getItem('name');
+}
+// myname = sessionStorage.getItem('name');
 //peer object open for connection
 myPeer.on('open', id => {
     console.log(id);

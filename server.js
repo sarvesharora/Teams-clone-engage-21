@@ -32,8 +32,8 @@ io.on('connection', socket => {
     console.log(socket.id);
     socket.on('join-chat-room', (chatroomid) => {
         socket.join(chatroomid);
-        socket.on('chat-message', (msg,name) => {
-            socket.to(chatroomid).emit('accept', msg,name);
+        socket.on('chat-message', (msg, name) => {
+            socket.to(chatroomid).emit('accept', msg, name);
         })
     })
     socket.on('join-room', (roomid, peerid, name) => {
@@ -58,6 +58,6 @@ io.on('connection', socket => {
     })
 })
 
-server.listen(port||3000, function () {
+server.listen(port || 3000, function () {
     console.log('server is listening 3000');
 });

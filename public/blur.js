@@ -66,4 +66,3 @@ async function perform(net) {
             edgeBlurAmount, flipHorizontal);
     }
 }
-z
