@@ -67,12 +67,24 @@ peerjs is used to send stream to all the peer in the specific link
          KEYWORDS(with_functionality)
 
     3.1. MUTE/UNMUTE (for muting or unmuting)
+
+
     3.2. DISCONNECT?LEAVE (for leavig the meeting)
+
+
     3.3. RAISEHAND/HAND/HANDRAISE (raises your hand)
+
+
     3.4. SCREENSHARE/SHARESCREEN (share your scrren)
+
+
     3.5. COPY/COPYLINK (copy the link of your meeting)
+
+
     3.6. PARTICIPANTS/PARTICIPANT (shows you participants)
+
     3.7. VIDEO (turns on or off the video)
+
     3.8. BLUR (blurs the background)
 
 4.  it will show you what it hears
