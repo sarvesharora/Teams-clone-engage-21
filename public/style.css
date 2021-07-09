@@ -61,7 +61,7 @@ video {
 .buttons {
   position: absolute;
   bottom: 10px;
-  left: 30vw;
+  left: 20vw;
   z-index: 100;
 }
 .messaging {
@@ -72,11 +72,14 @@ video {
   z-index: 1001;
 }
 .show_message {
-  height: auto;
   width: 300px;
   position: absolute;
   bottom: 50px;
   right: 10px;
+  height: 90vh;
+  scroll-behavior: smooth;
+  overflow-y: scroll;
+  contain: content;
 }
 .comingmessage {
   text-align: left;

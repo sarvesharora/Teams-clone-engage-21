@@ -311,3 +311,6 @@ const raisehand = () => {
         bt.style.color = "";
     }
 }
+
+
+// document.querySelector('.show_message').scrollTo(0, document.querySelector('.show_message').scrollHeight);
